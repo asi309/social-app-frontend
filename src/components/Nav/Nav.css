@@ -1,0 +1,79 @@
+nav {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 0.5px solid #dfdfdfdc;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  min-width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+p.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-left: 50px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul > li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+
+li a {
+  text-decoration: none;
+}
+
+li a:focus {
+  border-bottom: 5px solid  #60b2ff;
+}
+
+label.toggle-switch {
+  border-radius: 16px;
+  display: inline-block;
+  position: relative;
+  height: 32px;
+  width: 64px;
+  margin-left: 10px;
+}
+
+span.toggle-slider {
+  cursor: pointer;
+  position: absolute;
+  background-color: #c9c9c9;
+  border-radius: 16px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: 0.4s;
+}
+
+span.toggle-slider:before {
+  border: 1px solid #111111;
+  position: absolute;
+  content: '';
+  background-color: white;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  left: 0;
+  transition: 0.4s;
+}
+
+input:checked + span.toggle-slider {
+  background-color: #0075ff;
+}
+
+input:checked + span.toggle-slider:before {
+  transform: translateX(32px);
+}
