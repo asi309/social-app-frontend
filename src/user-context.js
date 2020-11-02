@@ -34,9 +34,7 @@ export const ContextWrapper = (props) => {
       }
       return false;
     } catch (error) {
-      if (error.response.status === 401) {
-        return false;
-      }
+      return false;
     }
   };
 

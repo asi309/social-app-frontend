@@ -28,7 +28,7 @@ export default function Login({ history }) {
       }
     } catch (error) {
       setError(true);
-      const message = error.response.data.message || false;
+      const message = error.response ? error.response.data.message : false;
       if (message) {
         setErrorMessage(message);
       } else {
