@@ -15,41 +15,15 @@ export const ContextWrapper = (props) => {
     color: 'white',
   };
 
-  const apiLogoutHandler = async () => {
+  const defaultAuthHandler = async () => {
     try {
-      await api.get('/logout');
-      return false;
-    } catch (error) {
-      if (error.response.status === 401) {
-        return false;
-      }
-    }
-  };
-
-  const apiUserCheckHandler = async (user_id) => {
-    try {
-      const response = await api.get(`/user/${user_id}`);
+      const response = await api.get('/check');
       if (response.status === 200) {
         return true;
       }
-      return false;
     } catch (error) {
       return false;
     }
-  };
-
-  const defaultAuthHandler = () => {
-    const user_id = localStorage.getItem('user_id');
-    if (!user_id) {
-      apiLogoutHandler().then((res) => {
-        console.log(res);
-        return res;
-      });
-    }
-    apiUserCheckHandler(user_id).then(res => {
-      console.log(res);
-      return res;
-    })
   };
 
   const defaultThemeHandler = () => {
@@ -62,7 +36,11 @@ export const ContextWrapper = (props) => {
   };
 
   const [themePref, setThemePref] = useState(defaultThemeHandler());
-  const [isLoggedIn, setIsLoggedIn] = useState(defaultAuthHandler());
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    defaultAuthHandler().then((res) => setIsLoggedIn(res));
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('theme', themePref);

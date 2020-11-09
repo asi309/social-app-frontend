@@ -1,0 +1,59 @@
+div.feed-container {
+  display: flex;
+  height: calc(100vh - 63px);
+  width: 100vw;
+  justify-content: center;
+  margin-top: 63px;
+}
+
+div.feed {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 750px;
+  padding: 30px 60px 0px 90px;
+}
+
+div.feed div.message--error {
+  color: rgb(141, 141, 141);
+  font-size: 20px;
+  margin: 30% auto;
+}
+
+article.post {
+  border-radius: 3px;
+  border: 1px solid #dfdfdfdc;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+  max-width: 650px;
+}
+
+article.post header {
+  display: flex;
+  border-bottom: 0.5px solid #dfdfdfdc;
+  padding: 15px;
+}
+
+article.post header .author--name {
+  font-weight: 700;
+}
+
+article.post div.content-container {
+  padding: 15px;
+  border-bottom: 0.5px solid #dfdfdfdc;
+}
+
+article.post div.actions--social {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+}
+
+article.post div.actions--social button {
+  background: inherit;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  width: 50%;
+}

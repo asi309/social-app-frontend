@@ -22,7 +22,6 @@ export default function Login({ history }) {
       const user_id = response.data.user_id || false;
 
       if (user_id) {
-        localStorage.setItem('user_id', user_id);
         setIsLoggedIn(true);
         history.push('/home');
       }
@@ -54,6 +53,7 @@ export default function Login({ history }) {
               : {}
           }
         >
+        <div className="title">Login</div>
           <input
             type="email"
             id="email"

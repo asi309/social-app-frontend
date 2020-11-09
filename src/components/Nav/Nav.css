@@ -6,8 +6,7 @@ nav {
   position: fixed;
   top: 0;
   min-width: 100%;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 15px 40px;
   margin-bottom: 20px;
 }
 
@@ -31,10 +30,6 @@ nav ul > li {
 
 li a {
   text-decoration: none;
-}
-
-li a:focus {
-  border-bottom: 5px solid  #60b2ff;
 }
 
 label.toggle-switch {

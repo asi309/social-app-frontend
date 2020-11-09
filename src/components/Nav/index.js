@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import api from '../../services/api';
 import { UserContext } from '../../user-context';
@@ -26,7 +26,6 @@ const Nav = () => {
 
   const logoutHandler = async () => {
     try {
-      localStorage.removeItem('user_id');
       await api.get('/logout');
       setIsLoggedIn(false);
     } catch (error) {
@@ -37,33 +36,33 @@ const Nav = () => {
   return (
     <nav style={themePref === 'dark' ? darkStyle : lightStyle}>
       <p className="title">Social App</p>
-      {/* {console.log(isLoggedIn)} */}
       {isLoggedIn ? (
         <ul>
           <li>
-            <Link
+            <NavLink
               to="/home"
+              activeStyle={{ borderBottom: '5px solid #60b2ff' }}
               style={themePref === 'dark' ? darkStyle : lightStyle}
             >
               Home
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/profile"
               style={themePref === 'dark' ? darkStyle : lightStyle}
             >
               Profile
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/"
               style={themePref === 'dark' ? darkStyle : lightStyle}
               onClick={logoutHandler}
             >
               Logout
-            </Link>
+            </NavLink>
           </li>
           <li id="theme-selector">
             <p>Dark Mode</p>
@@ -81,17 +80,23 @@ const Nav = () => {
       ) : (
         <ul>
           <li>
-            <Link to="/" style={themePref === 'dark' ? darkStyle : lightStyle}>
+            <NavLink
+              to="/"
+              exact
+              activeStyle={{borderBottom: '5px solid  #60b2ff'}}
+              style={themePref === 'dark' ? darkStyle : lightStyle}
+            >
               Login
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/register"
+              activeStyle={{borderBottom: '5px solid  #60b2ff'}}
               style={themePref === 'dark' ? darkStyle : lightStyle}
             >
               Signup
-            </Link>
+            </NavLink>
           </li>
           <li id="theme-selector">
             <p>Dark Mode</p>
