@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/RegisterUser';
 import Home from './pages/Home';
 import Nav from './components/Nav';
+import Footer from './components/Footer';
 
 export default function Routes() {
   return (
@@ -15,6 +16,7 @@ export default function Routes() {
         <Route path="/register" component={Register} />
         <Route path="/home" component={Home} />
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }

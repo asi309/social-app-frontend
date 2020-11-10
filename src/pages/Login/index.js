@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import api from '../../services/api';
 import { UserContext } from '../../user-context';
@@ -10,9 +10,19 @@ export default function Login({ history }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const { setIsLoggedIn, themePref, lightStyle, darkStyle } = useContext(
-    UserContext
-  );
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    themePref,
+    lightStyle,
+    darkStyle,
+  } = useContext(UserContext);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      history.push('/home');
+    }
+  }, [isLoggedIn]);
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -22,6 +32,7 @@ export default function Login({ history }) {
       const user_id = response.data.user_id || false;
 
       if (user_id) {
+        localStorage.setItem('user_id', user_id);
         setIsLoggedIn(true);
         history.push('/home');
       }
@@ -53,7 +64,7 @@ export default function Login({ history }) {
               : {}
           }
         >
-        <div className="title">Login</div>
+          <div className="title">Login</div>
           <input
             type="email"
             id="email"

@@ -1,0 +1,106 @@
+article.post {
+  border-radius: 3px;
+  border: 1px solid #dfdfdfdc;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+  max-width: 650px;
+}
+
+article.post header {
+  display: flex;
+  border-bottom: 0.5px solid #dfdfdfdc;
+  padding: 15px;
+}
+
+article.post header .author--name {
+  font-weight: 700;
+}
+
+article.post div.content-container {
+  padding: 15px;
+}
+
+article.post div.stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 12px 25px 6px 25px;
+}
+
+article.post div.stats div {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+article.post div.actions--social {
+  border-top: 0.5px solid #dfdfdfdc;
+}
+
+div.actions--social section.buttons {
+  border-bottom: 0.5px solid #dfdfdfdc;
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+}
+
+div.actions--social section.buttons button {
+  background: inherit;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  width: 50%;
+}
+
+div.actions--social section.buttons button.like {
+  border-right: 0.5px solid #dfdfdfdc;
+}
+
+div.actions--social section.comment {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 15px 10px;
+  height: 50px;
+}
+
+section.comment div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 14px;
+  min-width: 100%;
+}
+
+section.comment textarea {
+  display: flex;
+  flex-grow: 1;
+  background: none;
+  background-color: inherit;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  resize: none;
+  line-height: 18px;
+  height: inherit;
+  min-height: 20px;
+  max-height: 80px;
+  width: 0;
+}
+
+section.comment textarea:active {
+  border-style: none;
+}
+
+section.comment button {
+  border: none;
+  background: inherit;
+  color: #0075ff;
+  cursor: pointer;
+}
+
+section.comment button:disabled {
+  color: #60b2ff;
+  cursor: initial;
+}
+

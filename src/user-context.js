@@ -19,6 +19,7 @@ export const ContextWrapper = (props) => {
     try {
       const response = await api.get('/check');
       if (response.status === 200) {
+        localStorage.setItem('user_id', response.data.user_id);
         return true;
       }
     } catch (error) {

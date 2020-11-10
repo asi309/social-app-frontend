@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 
 import api from '../../services/api';
+import Post from '../../components/Post';
 import { UserContext } from '../../user-context';
 
 import './Home.css';
@@ -14,7 +15,7 @@ export default function Home({ history }) {
   const getFeed = async () => {
     try {
       const response = await api.get('/home');
-      if (response.data.length === 0) {
+      if (!response.data.feedPosts) {
         setMessage(response.data.message);
       } else {
         setFeed(response.data.feedPosts);
@@ -37,25 +38,10 @@ export default function Home({ history }) {
       style={themePref === 'dark' ? darkStyle : lightStyle}
     >
       <div className="feed">
-        {feed ? (
-          feed.length !== 0 ? (
-            feed.map((post) => (
-              <article key={post._id} className="post">
-                <header>
-                  <div className="author--name">{post.author.username}</div>
-                </header>
-                <div className="content-container">{post.content}</div>
-                <div className="actions--social">
-                  <button className="like">Like</button>
-                  <button className="comment">Comment</button>
-                </div>
-              </article>
-            ))
-          ) : (
-            <div className="message--error">{message}</div>
-          )
+        {feed.length !== 0 ? (
+          feed.map((post) => <Post key={post._id} post={post} />)
         ) : (
-          ''
+          <div className="message--error">{message}</div>
         )}
       </div>
     </div>

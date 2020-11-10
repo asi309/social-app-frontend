@@ -27,6 +27,7 @@ const Nav = () => {
   const logoutHandler = async () => {
     try {
       await api.get('/logout');
+      localStorage.removeItem('user_id');
       setIsLoggedIn(false);
     } catch (error) {
       return;
@@ -50,6 +51,7 @@ const Nav = () => {
           <li>
             <NavLink
               to="/profile"
+              activeStyle={{ borderBottom: '5px solid #60b2ff' }}
               style={themePref === 'dark' ? darkStyle : lightStyle}
             >
               Profile
@@ -58,6 +60,8 @@ const Nav = () => {
           <li>
             <NavLink
               to="/"
+              exact
+              activeStyle={{ borderBottom: '5px solid #60b2ff' }}
               style={themePref === 'dark' ? darkStyle : lightStyle}
               onClick={logoutHandler}
             >
