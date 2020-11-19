@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import api from '../../services/api';
 
@@ -48,6 +49,15 @@ export default function Post(props) {
     }
   };
 
+  const postDetailsHandler = async (post_id) => {
+    try {
+      const response = await api.get(`/post/${post_id.toString()}`);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (
       post.likes.find(
@@ -78,7 +88,9 @@ export default function Post(props) {
       <header>
         <div className="author--name">{post.author.username}</div>
       </header>
-      <div className="content-container">{post.content}</div>
+      <Link to={`/p/${post._id}`}>
+        <div className="content-container">{post.content}</div>
+      </Link>
       <div className="stats">
         <div className="stats--like">
           {likes}
@@ -108,7 +120,9 @@ export default function Post(props) {
             />
             Like
           </button>
-          <button className="comments">Comment</button>
+          <Link to={`/p/${post._id}`}>
+            <button className="comments">Comment</button>
+          </Link>
         </section>
         <section className="comment">
           <div className="comment-container">

@@ -7,6 +7,11 @@ article.post {
   max-width: 650px;
 }
 
+article.post a {
+  color: inherit;
+  text-decoration: none;
+}
+
 article.post header {
   display: flex;
   border-bottom: 0.5px solid #dfdfdfdc;
@@ -44,6 +49,16 @@ div.actions--social section.buttons {
   display: flex;
   flex-direction: row;
   height: 40px;
+}
+
+div.actions--social section.buttons a {
+  height: inherit;
+  width: 50%;
+}
+
+div.actions--social section.buttons button.comments {
+  height: inherit;
+  width: 100%;
 }
 
 div.actions--social section.buttons button {
@@ -113,4 +128,3 @@ article.post div.message--reaction {
   word-wrap: break-word;
   width: 100%;
 }
-
