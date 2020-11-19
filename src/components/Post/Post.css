@@ -18,6 +18,8 @@ article.post header .author--name {
 }
 
 article.post div.content-container {
+  max-width: 598px;
+  word-wrap: break-word;
   padding: 15px;
 }
 
@@ -102,5 +104,13 @@ section.comment button {
 section.comment button:disabled {
   color: #60b2ff;
   cursor: initial;
+}
+
+article.post div.message--reaction {
+  background-color: rgba(255, 145, 145, 0.938);
+  color: rgb(255, 0, 0);
+  padding: 10px 25px;
+  word-wrap: break-word;
+  width: 100%;
 }
 

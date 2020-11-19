@@ -38,12 +38,17 @@ export default function Post(props) {
       );
       setComments(response.data.existing_post.comments.length);
       setComment('');
-    } catch (error) {}
+    } catch (error) {
+      setError(true);
+      setMessage('Cannot perform operation');
+      setTimeout(() => {
+        setError(false);
+        setMessage('');
+      }, 2200);
+    }
   };
 
   useEffect(() => {
-    setLikes(post.likes.length);
-    setComments(post.comments.length);
     if (
       post.likes.find(
         (like) => like.user.toString() === localStorage.getItem('user_id')
@@ -54,6 +59,11 @@ export default function Post(props) {
       setLike(false);
     }
   }, []);
+
+  useEffect(() => {
+    setLikes(post.likes.length);
+    setComments(post.comments.length);
+  }, [post.likes.length, post.comments.length]);
 
   useMemo(() => {
     if (like) {

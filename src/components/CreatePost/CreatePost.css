@@ -1,0 +1,62 @@
+div.post-creator {
+  border: 1px solid #dfdfdfdc;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+  max-width: 650px;
+}
+
+div.post-creator div.editor {
+  display: flex;
+  flex-direction: row;
+  max-width: 650px;
+}
+
+div.editor div.DraftEditor-root {
+  display: flex;
+  flex-grow: 1;
+  max-width: 520px;
+  padding: 20px;
+}
+div.DraftEditor-editorContainer,
+div.public-DraftEditor-content {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+div.public-DraftEditor-content * {
+  max-width: 460px;
+  width: 100%;
+}
+
+div.editor button {
+  border: none;
+  background: none;
+  color: #0075ff;
+  cursor: pointer;
+  min-width: 50px;
+  padding: 10px 15px;
+}
+
+div.editor button:disabled {
+  color: #60b2ff;
+  cursor: initial;
+}
+
+div.post-creator div.message--error {
+  background-color: rgba(255, 145, 145, 0.938);
+  color: rgb(255, 0, 0);
+  padding: 10px 25px;
+  word-wrap: break-word;
+  width: 100%;
+}
+
+div.post-creator div.message--success {
+  background-color: rgba(153, 252, 150, 0.897);
+  color: rgb(0, 129, 11);
+  padding: 10px 25px;
+  word-wrap: break-word;
+  width: 100%;
+}

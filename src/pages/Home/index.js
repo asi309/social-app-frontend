@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import api from '../../services/api';
 import Post from '../../components/Post';
 import { UserContext } from '../../user-context';
+import CreatePost from '../../components/CreatePost';
 
 import './Home.css';
 
@@ -38,6 +39,7 @@ export default function Home({ history }) {
       style={themePref === 'dark' ? darkStyle : lightStyle}
     >
       <div className="feed">
+        <CreatePost />
         {feed.length !== 0 ? (
           feed.map((post) => <Post key={post._id} post={post} />)
         ) : (
