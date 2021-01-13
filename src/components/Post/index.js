@@ -6,7 +6,7 @@ import api from '../../services/api';
 import './Post.css';
 
 export default function Post(props) {
-  const { post } = props;
+  const { post, ownPost } = props;
   const [like, setLike] = useState(false);
   const [likes, setLikes] = useState(0);
   const [likeButtonStyle, setLikeButtonStyle] = useState({});
@@ -86,7 +86,9 @@ export default function Post(props) {
   return (
     <article className="post">
       <header>
-        <div className="author--name">{post.author.username}</div>
+        <Link to={`/u/${post.author._id}`}>
+          <div className="author--name">{post.author.username}</div>
+        </Link>
       </header>
       <Link to={`/p/${post._id}`}>
         <div className="content-container">{post.content}</div>

@@ -1,0 +1,59 @@
+div.profile-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 100%;
+  justify-content: center;
+  margin-top: 63px;
+  margin-bottom: 36px;
+}
+
+div.profile-data {
+  display: flex;
+  flex-direction: column;
+  max-width: 750px;
+  padding: 30px 60px 0px 90px;
+}
+
+div.profile-data div.username {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px 0;
+  min-width: 100%;
+}
+
+div.username .cta--follow {
+  background-color: #0077ffe8;
+  border: 1px solid #0077ffe8;
+  border-radius: 3px;
+  color: white;
+  margin: 0 20px;
+  padding: 10px 15px;
+  outline: none;
+}
+
+div.username .cta--follow:disabled {
+  background-color: #60b2ff;
+  border-color: #60b2ff;
+}
+
+div.profile-data div.profile-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-width: 100%;
+}
+
+div.profile-data div.profile-stats > div {
+  margin: 10px 15px;
+}
+
+div.timeline {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 750px;
+  padding: 30px 60px 0px 90px;
+}

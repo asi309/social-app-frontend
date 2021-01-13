@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/RegisterUser';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 
@@ -15,7 +16,9 @@ export default function Routes() {
         <Route path="/" exact component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/home" component={Home} />
+        <Route path="/profile" component={Profile} />
         <Route path="/p/:postId" component={Home} />
+        <Route path="/u/:userId" component={Profile} />
       </Switch>
       <Footer />
     </BrowserRouter>

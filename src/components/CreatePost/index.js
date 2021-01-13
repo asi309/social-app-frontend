@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ContentState, convertToRaw, Editor, EditorState } from 'draft-js';
 
 import api from '../../services/api';
