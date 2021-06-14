@@ -5,8 +5,7 @@ import api from '../../services/api';
 
 import './Post.css';
 
-export default function Post(props) {
-  const { post, ownPost } = props;
+export default function Post({ post, details }) {
   const [like, setLike] = useState(false);
   const [likes, setLikes] = useState(0);
   const [likeButtonStyle, setLikeButtonStyle] = useState({});
@@ -15,9 +14,13 @@ export default function Post(props) {
   const [error, setError] = useState(false);
   const [message, setMessage] = useState('');
 
+  const user = localStorage.getItem('user');
+
   const likeHandler = async (post_id) => {
     try {
-      const response = await api.get('/post/like', { headers: { post_id } });
+      const response = await api.get('/post/like', {
+        headers: { post_id, user },
+      });
       setLikes(response.data.existing_post.likes.length);
       setLike(!like);
     } catch (error) {
@@ -35,7 +38,7 @@ export default function Post(props) {
       const response = await api.post(
         '/post/comment',
         { content: comment },
-        { headers: { post_id } }
+        { headers: { post_id, user } }
       );
       setComments(response.data.existing_post.comments.length);
       setComment('');
@@ -46,15 +49,6 @@ export default function Post(props) {
         setError(false);
         setMessage('');
       }, 2200);
-    }
-  };
-
-  const postDetailsHandler = async (post_id) => {
-    try {
-      const response = await api.get(`/post/${post_id.toString()}`);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -90,23 +84,43 @@ export default function Post(props) {
           <div className="author--name">{post.author.username}</div>
         </Link>
       </header>
-      <Link to={`/p/${post._id}`}>
-        <div className="content-container">{post.content}</div>
-      </Link>
-      <div className="stats">
-        <div className="stats--like">
-          {likes}
-          {likes !== 1 ? ' likes' : ' like'}
-        </div>
-        <div className="stats--comments">
-          {comments > 0 ? comments : ''}
-          {comments === 1
-            ? ' comment'
-            : comments === 0
-            ? 'No comments'
-            : ' comments'}
-        </div>
-      </div>
+      {!details ? (
+        <Link to={`/p/${post._id}`}>
+          <div className="content-container">{post.content}</div>
+          <div className="stats">
+            <div className="stats--like">
+              {likes}
+              {likes !== 1 ? ' likes' : ' like'}
+            </div>
+            <div className="stats--comments">
+              {comments > 0 ? comments : ''}
+              {comments === 1
+                ? ' comment'
+                : comments === 0
+                ? 'No comments'
+                : ' comments'}
+            </div>
+          </div>
+        </Link>
+      ) : (
+        <>
+          <div className="content-container">{post.content}</div>
+          <div className="stats">
+            <div className="stats--like">
+              {likes}
+              {likes !== 1 ? ' likes' : ' like'}
+            </div>
+            <div className="stats--comments">
+              {comments > 0 ? comments : ''}
+              {comments === 1
+                ? ' comment'
+                : comments === 0
+                ? 'No comments'
+                : ' comments'}
+            </div>
+          </div>
+        </>
+      )}
       <div className="actions--social">
         <section className="buttons">
           <button
@@ -122,9 +136,15 @@ export default function Post(props) {
             />
             Like
           </button>
-          <Link to={`/p/${post._id}`}>
-            <button className="comments">Comment</button>
-          </Link>
+          {!details ? (
+            <Link to={`/p/${post._id}`} id="comment">
+              <button className="comments">Comment</button>
+            </Link>
+          ) : (
+            <div id="comment">
+              <button className="comments">Comment</button>
+            </div>
+          )}
         </section>
         <section className="comment">
           <div className="comment-container">

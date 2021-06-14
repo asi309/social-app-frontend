@@ -1,6 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react';
-
-import api from './services/api';
+import React, { useState, createContext, useEffect, useMemo } from 'react';
 
 export const UserContext = createContext();
 
@@ -16,15 +14,11 @@ export const ContextWrapper = (props) => {
   };
 
   const defaultAuthHandler = async () => {
-    try {
-      const response = await api.get('/check');
-      if (response.status === 200) {
-        localStorage.setItem('user_id', response.data.user_id);
-        return true;
-      }
-    } catch (error) {
-      return false;
+    const user = localStorage.getItem('user') || false;
+    if (user) {
+      return true;
     }
+    return false;
   };
 
   const defaultThemeHandler = () => {
@@ -37,11 +31,7 @@ export const ContextWrapper = (props) => {
   };
 
   const [themePref, setThemePref] = useState(defaultThemeHandler());
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    defaultAuthHandler().then((res) => setIsLoggedIn(res));
-  }, []);
+  const [isLoggedIn, setIsLoggedIn] = useState(defaultAuthHandler());
 
   useEffect(() => {
     localStorage.setItem('theme', themePref);

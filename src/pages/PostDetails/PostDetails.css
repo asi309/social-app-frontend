@@ -1,0 +1,22 @@
+div.postDetails-container {
+  display: flex;
+  min-height: 100vh;
+  min-width: 100%;
+  justify-content: center;
+  margin-top: 63px;
+  margin-bottom: 36px;
+}
+
+div.postDetails {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 750px;
+  padding: 30px 60px 0px 90px;
+}
+
+div.feed div.message--error {
+  color: rgb(141, 141, 141);
+  font-size: 20px;
+  margin: 30% auto;
+}

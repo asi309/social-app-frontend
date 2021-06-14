@@ -6,7 +6,7 @@ import api from '../../services/api';
 import 'draft-js/dist/Draft.css';
 import './CreatePost.css';
 
-export default function CreatePost() {
+export default function CreatePost({newPost}) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -26,6 +26,7 @@ export default function CreatePost() {
       setEditorState(EditorState.push(editorState, ContentState.createFromText('')));
       if (response.status === 201) {
         setSuccess(true);
+        newPost(() => true);
         setMessage(response.data.message);
         setTimeout(() => {
           setSuccess(false);

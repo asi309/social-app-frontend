@@ -10,16 +10,12 @@ export default function Login({ history }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const {
-    isLoggedIn,
-    setIsLoggedIn,
-    themePref,
-    lightStyle,
-    darkStyle,
-  } = useContext(UserContext);
+  const { isLoggedIn, setIsLoggedIn, themePref, lightStyle, darkStyle } =
+    useContext(UserContext);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    const user = localStorage.getItem('user');
+    if (user && isLoggedIn) {
       history.push('/home');
     }
   }, [isLoggedIn]);
@@ -30,8 +26,10 @@ export default function Login({ history }) {
     try {
       const response = await api.post('/login', { email, password });
       const user_id = response.data.user_id || false;
+      const user = response.data.user || false;
 
-      if (user_id) {
+      if (user && user_id) {
+        localStorage.setItem('user', user);
         localStorage.setItem('user_id', user_id);
         setIsLoggedIn(true);
         history.push('/home');

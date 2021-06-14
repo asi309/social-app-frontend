@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import api from '../../services/api';
+import SearchBar from '../SearchBar';
 import { UserContext } from '../../user-context';
 
 import './Nav.css';
@@ -25,20 +25,26 @@ const Nav = () => {
   };
 
   const logoutHandler = async () => {
-    try {
-      await api.get('/logout');
-      localStorage.removeItem('user_id');
-      setIsLoggedIn(false);
-    } catch (error) {
-      return;
-    }
+    localStorage.removeItem('user');
+    localStorage.removeItem('user_id');
+    setIsLoggedIn(false);
   };
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   return (
     <nav style={themePref === 'dark' ? darkStyle : lightStyle}>
       <p className="title">Social App</p>
       {isLoggedIn ? (
         <ul>
+          <li>
+            <SearchBar />
+          </li>
           <li>
             <NavLink
               to="/home"

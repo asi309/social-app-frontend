@@ -38,9 +38,11 @@ export default function Register({ history }) {
           password,
         });
 
+        const user = response.data.user || false;
         const user_id = response.data.user_id || false;
 
-        if (user_id) {
+        if (user && user_id) {
+          localStorage.setItem('user', user);
           localStorage.setItem('user_id', user_id);
           setIsLoggedIn(true);
           history.push('/home');

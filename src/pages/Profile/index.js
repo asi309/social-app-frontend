@@ -6,15 +6,16 @@ import { UserContext } from '../../user-context';
 
 import './Profile.css';
 
-export default function Profile(props) {
+export default function Profile({ history, match }) {
   const [profile, setProfile] = useState({});
+  const [isFollowed, setIsFollowed] = useState(false);
   const [timeline, setTimeline] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
   const [page, setPage] = useState(1);
   const [location, setLocation] = useState('');
   const [message, setMessage] = useState('');
 
-  const { history, match } = props;
+  const user = localStorage.getItem('user');
   const user_id = localStorage.getItem('user_id');
 
   const loader = useRef(null);
@@ -40,6 +41,11 @@ export default function Profile(props) {
 
   const profileSetter = (data) => {
     setProfile(() => data);
+    if (data.isFollowed) {
+      setIsFollowed(true);
+    } else {
+      setIsFollowed(false);
+    }
   };
 
   const timelineSetter = (data) => {
@@ -48,7 +54,9 @@ export default function Profile(props) {
 
   const getUser = async () => {
     try {
-      const response = await api.get(`/user/${location.slice(3)}`);
+      const response = await api.get(`/user/id/${location.slice(3)}`, {
+        headers: { user },
+      });
       profileSetter(response.data);
     } catch (error) {
       console.log(error);
@@ -57,7 +65,9 @@ export default function Profile(props) {
 
   const getProfile = async () => {
     try {
-      const response = await api.get(`/user/${user_id}`);
+      const response = await api.get(`/user/id/${user_id}`, {
+        headers: { user },
+      });
       profileSetter(response.data);
     } catch (error) {
       console.log(error);
@@ -66,7 +76,7 @@ export default function Profile(props) {
 
   const getUserTimeline = async () => {
     const response = await api.get(`/posts?page=${page}`, {
-      headers: { user_id: location.slice(3) },
+      headers: { user_id: location.slice(3), user },
     });
     setTotalPosts(response.data.totalPosts);
     if (!response.data.posts) {
@@ -79,7 +89,7 @@ export default function Profile(props) {
   const getTimeline = async () => {
     try {
       const response = await api.get(`/posts?page=${page}`, {
-        headers: { user_id },
+        headers: { user, user_id },
       });
       setTotalPosts(response.data.totalPosts);
       if (!response.data.posts) {
@@ -93,10 +103,29 @@ export default function Profile(props) {
     }
   };
 
-  const followUser = (userId) => {
+  const followUser = async (userId) => {
     try {
-      const response = api.post('/user/follow', { userToFollow: userId });
-      console.log(response.data);
+      const response = await api.post(
+        '/user/follow',
+        { userToFollow: userId },
+        { headers: { user } }
+      );
+      if (response?.status === 201) {
+        setIsFollowed(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const unfollowUser = async (userId) => {
+    try {
+      const response = await api.delete(`/unfollow/user/${userId}`, {
+        headers: { user },
+      });
+      if (response?.status === 204) {
+        setIsFollowed(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -139,48 +168,57 @@ export default function Profile(props) {
       className="profile-container"
       style={themePref === 'dark' ? darkStyle : lightStyle}
     >
-      <div className="profile-data">
-        {Object.keys(profile).length !== 0 ? (
-          <>
-            <div className="username">
-              <h3>{profile.username}</h3>
-              {location.match(/\/u\//) ? (
-                <button
-                  className="cta--follow"
-                  onClick={() => followUser(profile._id)}
-                  disabled={profile.isFollowed}
-                >
-                  {profile.isFollowed ? <p>Followed</p> : <p>Follow</p>}
-                </button>
-              ) : (
-                ''
-              )}
-            </div>
-            <div className="profile-stats">
-              <div>
-                <b>{profile.totalDocs}</b> posts
+      <div className="profile">
+        <div className="profile-data">
+          {Object.keys(profile).length !== 0 ? (
+            <>
+              <div className="username">
+                <h3>{profile.username}</h3>
+                {location.match(/\/u\//) &&
+                !location.match(new RegExp(user_id)) ? (
+                  isFollowed ? (
+                    <button
+                      className="cta--follow"
+                      onClick={() => unfollowUser(profile._id)}
+                    >
+                      <p>Unfollow</p>
+                    </button>
+                  ) : (
+                    <button
+                      className="cta--follow"
+                      onClick={() => followUser(profile._id)}
+                    >
+                      <p>Follow</p>
+                    </button>
+                  )
+                ) : (
+                  ''
+                )}
               </div>
-              <div>
-                <b>{profile.totalFollower}</b> followers
+              <div className="profile-stats">
+                <div>
+                  <b>{profile.totalDocs}</b> posts
+                </div>
+                <div>
+                  <b>{profile.totalFollower}</b> followers
+                </div>
+                <div>
+                  <b>{profile.totalFollowing}</b> following
+                </div>
               </div>
-              <div>
-                <b>{profile.totalFollowing}</b> following
-              </div>
-            </div>
-          </>
-        ) : (
-          ''
-        )}
-      </div>
-      <div className="timeline">
-        {timeline.length !== 0 ? (
-          timeline.map((post) => (
-            <Post key={post._id} post={post} ownPost={true} />
-          ))
-        ) : (
-          <div className="message--error">{message}</div>
-        )}
-        {!isLastPage() ? <div className="loading" ref={loader}></div> : ''}
+            </>
+          ) : (
+            ''
+          )}
+        </div>
+        <div className="timeline">
+          {timeline.length !== 0 ? (
+            timeline.map((post) => <Post key={post._id} post={post} />)
+          ) : (
+            <div className="message--error">{message}</div>
+          )}
+          {!isLastPage() ? <div className="loading" ref={loader}></div> : ''}
+        </div>
       </div>
     </div>
   );

@@ -50,8 +50,7 @@ div.actions--social section.buttons {
   flex-direction: row;
   height: 40px;
 }
-
-div.actions--social section.buttons a {
+div.actions--social section.buttons #comment {
   height: inherit;
   width: 50%;
 }

@@ -1,6 +1,5 @@
 div.profile-container {
   display: flex;
-  flex-direction: column;
   min-height: 100vh;
   min-width: 100%;
   justify-content: center;
@@ -8,9 +7,10 @@ div.profile-container {
   margin-bottom: 36px;
 }
 
-div.profile-data {
+div.profile {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   max-width: 750px;
   padding: 30px 60px 0px 90px;
 }
@@ -50,10 +50,8 @@ div.profile-data div.profile-stats > div {
   margin: 10px 15px;
 }
 
-div.timeline {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  max-width: 750px;
-  padding: 30px 60px 0px 90px;
+div.feed div.message--error {
+  color: rgb(141, 141, 141);
+  font-size: 20px;
+  margin: 30% auto;
 }

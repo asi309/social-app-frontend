@@ -12,6 +12,10 @@ export default function Home({ history }) {
   const [totalPosts, setTotalPosts] = useState(0);
   const [page, setPage] = useState(1);
   const [message, setMessage] = useState('');
+  const [newPostCreated, setNewPostCreated] = useState(false);
+
+  const user = localStorage.getItem('user');
+  const user_id = localStorage.getItem('user_id');
 
   const loader = useRef(null);
 
@@ -38,16 +42,21 @@ export default function Home({ history }) {
   const { themePref, lightStyle, darkStyle } = useContext(UserContext);
 
   const getFeed = async () => {
-    try {
-      const response = await api.get(`/home?page=${page}`);
-      setTotalPosts(response.data.totalPosts);
-      if (!response.data.feedPosts) {
-        setMessage(response.data.message);
-      } else {
-        setFeed((feed) => [...feed, ...response.data.feedPosts]);
+    if (user && user_id) {
+      try {
+        const response = await api.get(`/home?page=${page}`, {
+          headers: { user },
+        });
+        setTotalPosts(response.data.totalPosts);
+        if (!response.data.feedPosts) {
+          setMessage(response.data.message);
+        } else {
+          setFeed((feed) => [...feed, ...response.data.feedPosts]);
+        }
+      } catch (error) {
+        history.push('/');
       }
-    } catch (error) {
-      setMessage('Cannot load feed. Please try again later');
+    } else {
       history.push('/');
     }
   };
@@ -63,17 +72,23 @@ export default function Home({ history }) {
     getFeed();
   }, [page]);
 
+  useEffect(() => {
+    if (newPostCreated) {
+      setPage(() => 1);
+      setFeed(() => []);
+      setNewPostCreated(() => false);
+    }
+  }, [newPostCreated]);
+
   return (
     <div
       className="feed-container"
       style={themePref === 'dark' ? darkStyle : lightStyle}
     >
       <div className="feed">
-        <CreatePost />
+        <CreatePost newPost={setNewPostCreated} />
         {feed.length !== 0 ? (
-          feed.map((post) => (
-            <Post key={post._id} post={post} ownPost={false} />
-          ))
+          feed.map((post) => <Post key={post._id} post={post} />)
         ) : (
           <div className="message--error">{message}</div>
         )}
